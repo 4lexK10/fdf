@@ -1,23 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/23 10:23:00 by akloster          #+#    #+#             */
+/*   Updated: 2024/03/23 10:23:00 by akloster         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int main(int ac, char **av)
 {
-	//int	fd;
 	void	*mlx;
-	void	*mlx_win;
-	
+	void	*img;
+	char	*str;
+	int		fd;
+
 	if (ac != 2)
 		return (0);
-
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, av[1]);
-	if (mlx_win == NULL)
-		return (0);
-	mlx_loop(mlx);
-	//fd = open(av[1], O_RDONLY);
-	/*while (get_next_line(fd) != NULL)
+	/* mlx_loop(mlx); */
+	img = mlx_new_image(mlx, 1920, 1080);
+
+
+	fd = open(av[1], O_RDONLY);
+	str = get_next_line(fd);
+	while (str != NULL)
 	{
-		get_full_axis();
-	}*/
+		printf("%s", str);
+		str = get_next_line(fd);
+		/* get_full_axis(); */
+	}
 	return (0);
 }

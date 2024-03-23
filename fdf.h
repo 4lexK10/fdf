@@ -1,7 +1,8 @@
-#ifndef	"FDF_H"
-# define "FDF_H"
+#ifndef	FDF_H
+# define FDF_H
 
-# include "get_next_line.h"
+# include "MLX42/include/MLX42"
+# include "get_next_line/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>

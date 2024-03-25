@@ -16,7 +16,7 @@ NAME			=	fdf
 
 CFLAGS			=	-Wall -Wextra -Werror
 
-SRC				=	fdf.c 
+SRC				=	fdf.c img_build.c
 
 SRC_GNL			= get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
@@ -29,7 +29,7 @@ RM				=	rm -rf
 
 $(NAME):			$(OBJ_DIR) $(OBJ)
 					make -C ./minilibx
-					$(CC) $(CFLAGS) $(SRC_GNL) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
+					$(CC) $(CFLAGS) $(SRC_GNL) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $@
 
 all:				$(NAME)
 

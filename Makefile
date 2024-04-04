@@ -10,45 +10,49 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC				=	gcc
+CC				=	cc
 
 NAME			=	fdf
 
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror 
 
-SRC				=	fdf.c img_build.c
+INCLUDES		=	-I /usr/local/include
 
-SRC_GNL			= get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+SRC				=	fdf.c img_build.c test.c free_functions.c create_3d_grid.c
+
+LIB				=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+
+SRC_GNL			= 	gnl/get_next_line.c gnl/get_next_line_utils.c
 
 OBJ_DIR			=	objs/
 
 OBJ				=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
-
 RM				=	rm -rf
 
-$(NAME):			$(OBJ_DIR) $(OBJ)
-					make -C ./minilibx
-					$(CC) $(CFLAGS) $(SRC_GNL) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $@
+$(NAME):		$(OBJ_DIR) $(OBJ)
+				make -C ./libft
+				$(CC) $(CFLAGS) $(INCLUDES) $(SRC_GNL) $(OBJ) $(LIB) -o $@
 
-all:				$(NAME)
+all:			$(NAME)
 
-$(OBJ_DIR)%.o:%.c
-					$(CC) $(CFLAGS) -I . -c $< -o $@
+$(OBJ_DIR)%.o:	%.c
+				$(CC) $(CFLAGS) -c $< -o $@
 
-%.o: %.c
-					$(CC) $(CFLAGS) -Imlx -c $< -o $@
+%.o: 			%.c
+				$(CC) $(CFLAGS) $< -o $@
 
 
 $(OBJ_DIR):	
-					@mkdir -p $(OBJ_DIR)
+				@mkdir -p $(OBJ_DIR)
 
 clean:
-					$(RM) $(OBJ)
-					make clean -C ./minilibx
+				make clean -C./libft
+				$(RM) $(OBJ)
 
-fclean:				clean
-					$(RM) $(OBJ) $(NAME) $(OBJ_DIR)
+fclean:			clean
+				make fclean -C./libft
+				$(RM) $(OBJ) $(NAME) $(OBJ_DIR)
 				
 				
 

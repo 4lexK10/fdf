@@ -12,31 +12,85 @@
 
 #include "fdf.h"
 
-int main(int ac, char **av)
+/* int	main(void)
 {
 	void	*mlx;
 	void	*mlx_win;
 	t_data	img;
-	int		x;
+
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	img.img = mlx_new_image(mlx, 1920, 1080);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
+								&img.endian);
+	my_mlx_pixel_put(&img, 0, 0, 0x00FF0000);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
+} */
+
+int main(int ac, char **av)
+{
+/* 	void	*mlx;
+	void	*mlx_win;
+	t_data	img; */
 /* 	char	*str;
 	int		fd; */
+	int fd;
+	t_3d_grid	*head;
+	t_3d_grid	*temp;
 
 	if (ac != 2)
 		return (0);
-	mlx = mlx_init();
+	fd = open(av[1], O_RDONLY);
+	head = NULL;
+	create_3d_grid(fd, &head);
+	temp = head;
+	while (temp != NULL)
+	{
+		printf("x = %d\ny = %d\nz = %d\n", temp->x, temp->y, temp->z);
+		temp = temp->next;
+	}
+/* 	mlx = mlx_init();
 	if (!mlx)
-		return (0);
-	mlx_win = mlx_new_window (mlx , 1920, 1080, av[1]);
+		return (0); */
+	/*
+	int fd;
+	t_3d_grid	*head;
+
+	fd = open(av[1], O_RDONLY);
+	head = NULL;
+
+	create_3d_grid(fd, &head);	<-- gnl all of .fdf 
+							x = hor_pos, y = ver_pos, z = value
+	create_2d_grid();	<-- for each point of the 3d_grid
+							- (1) apply rotation matrices
+							- (2) apply orthographic projection
+
+
+	*/
+/* 	mlx_win = mlx_new_window (mlx , 1920, 1080, "fdf");
 	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian); */
 	//my_mlx_pixel_put(&img, 660, 540, 0xffffffff);
-	x = 0;
 	/* circle = sqrt((r - x)^2 + (r - y)^2) */
+	/* 
+		int		x;
+		int		y
+
+		while (y < 1080 && x < 1920)
+		{
+			if (rond(pow(y) + pow(x)) == rond(pow(r)))
+				my_mlx_pixel_put(&img, x, y, 0xffffffff);
+			++x;
+			++y
+		}
+	*/
 /* 	while (x < 500)
 		my_mlx_pixel_put(&img, 660 + x++, 540, 0xffffffff); */
-	my_mlx_pixel_put(&img, 950, 540, 0xffffffff);
+/* 	put_circle(100, 0, 0, &img);
+	put_square(100, 300, 300, &img);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	mlx_loop(mlx); */
 /* 	fd = open(av[1], O_RDONLY);
 	str = get_next_line(fd);
 	while (str != NULL)

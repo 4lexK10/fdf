@@ -12,10 +12,10 @@
 
 #include "fdf.h"
 
-void	ft_fdf_lstclear(t_3d_grid **lst)
+void	grid_lstclear(t_3d_grid **lst)
 {
-	t_list	*temp;
-	t_list	*prev;
+	t_3d_grid	*temp;
+	t_3d_grid	*prev;
 
 	if (!lst || !(*lst))
 		return ;
@@ -27,13 +27,14 @@ void	ft_fdf_lstclear(t_3d_grid **lst)
 		temp = temp->next;
 		free(prev);
 	}
+	*lst = NULL;
 }
 
 void	free_ptr_array(char ***s)
 {
 	int	i;
 
-	if (!*s)
+	if (!**s || !*s)
 		return ;
 	i = 0;
 	if (*s != NULL)

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft/libft.h"
 
 static int	create_3d_point(char *z_coordinate_char, t_3d_grid **head, int x, int y)
 {
@@ -63,12 +64,12 @@ t_3d_grid	*create_3d_grid(int fd, t_3d_grid **head)
 
 	y = 0;
 	res = create_row(fd, head, y);
-	while (res == 0)
+	while (res == 0) // try (!res)
 	{
 		++y;
 		res = create_row(fd, head, y);
 	}
-	if (res == -1)
-		return (ft_fdf_lstclear(head), NULL);
+	if (res != 0) // try (res)
+		return (grid_lstclear(head), NULL);
 	return (*head);
 }

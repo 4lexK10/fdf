@@ -35,7 +35,7 @@ int main(int ac, char **av)
 	t_data	img; */
 /* 	char	*str;
 	int		fd; */
-	int fd;
+	int		fd;
 	t_3d_grid	*head;
 	t_3d_grid	*temp;
 

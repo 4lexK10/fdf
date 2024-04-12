@@ -1,5 +1,6 @@
 #include "fdf.h"
 
+<<<<<<< HEAD
 static float	matrix_calc(t_3d_grid *point_3d, int x)
 {
 	t_3x3	rotation_matrix;
@@ -51,6 +52,8 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp)
 	return (head);
 }
 
+=======
+>>>>>>> c467c71a5cd6f5233212628335ff179bd7c90d14
 t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 {
 	t_2d_grid	*head;
@@ -61,6 +64,7 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 	head = NULL;
 	head = create_2d_point(head, temp_3d)
 	if (!head)
+<<<<<<< HEAD
 		return (grid_lstclear(&head_3d), NULL);
 	while (temp_3d != NULL)
 	{
@@ -71,3 +75,11 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 	// is 3d_grid still needed -- look for free point
 	return (head);
 }
+=======
+		return (1);
+	while (temp_3d != NULL)
+	{
+		temp = create_2d_point(head, temp_3d);
+		if
+	}
+>>>>>>> c467c71a5cd6f5233212628335ff179bd7c90d14

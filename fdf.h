@@ -13,13 +13,15 @@
 #ifndef	FDF_H
 # define FDF_H
 
-# include "/usr/local/include/mlx.h"
+//# include "/usr/local/include/mlx.h"
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
+# define X 1
+# define Y 0
 
 # include <stdio.h>
 
@@ -67,12 +69,12 @@ typedef struct s_3x3
 	int			z_z;
 }				t_3x3;
 
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+//void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_3d_grid	*create_3d_grid(int fd, t_3d_grid **head);
-void		ft_fdf_lstclear(t_3d_grid **lst);
+void		grid_lstclear(t_3d_grid **lst);
 void	free_ptr_array(char ***s);
 
-void    put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
-void    put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
+//void    put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
+//void    put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
 
 #endif

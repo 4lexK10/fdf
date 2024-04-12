@@ -16,11 +16,11 @@ NAME			=	fdf
 
 CFLAGS			=	-Wall -Wextra -Werror 
 
-INCLUDES		=	-I /usr/local/include
+INCLUDES		=	#-I /usr/local/include
 
-SRC				=	fdf.c img_build.c test.c free_functions.c create_3d_grid.c
+SRC				=	fdf.c free_functions.c create_3d_grid.c #test.c img_build.c
 
-LIB				=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+LIB				=	#-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 SRC_GNL			= 	gnl/get_next_line.c gnl/get_next_line_utils.c
 

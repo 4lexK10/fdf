@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft/libft.h"
 
 static int	create_3d_point(char *z_coordinate_char, t_3d_grid **head, int x, int y)
 {
@@ -20,7 +19,7 @@ static int	create_3d_point(char *z_coordinate_char, t_3d_grid **head, int x, int
 
 	temp = *head;
 	while (temp != NULL || temp->next != NULL)
-		temp = (*head)->next;
+		temp = temp->next;
 	new_point = (t_3d_grid *)malloc(sizeof(t_3d_grid));
 	if (!new_point)
 		return (-1);
@@ -28,7 +27,9 @@ static int	create_3d_point(char *z_coordinate_char, t_3d_grid **head, int x, int
 	new_point->y = y;
 	new_point->z = ft_atoi(z_coordinate_char);
 	new_point->next = NULL;
-	if (*head != NULL)
+	if (!temp)
+		*head = new_point;
+	else
 		temp->next = new_point;
 	return (0);
 }

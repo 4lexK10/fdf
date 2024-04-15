@@ -13,7 +13,7 @@
 #ifndef	FDF_H
 # define FDF_H
 
-//# include "/usr/local/include/mlx.h"
+# include "/usr/local/include/mlx.h"
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
 # include <stdlib.h>

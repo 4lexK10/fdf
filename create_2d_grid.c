@@ -49,7 +49,7 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp)
 	return (head);
 }
 
-t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
+t_2d_grid	*create_2d_grid(t_3d_grid **head_3d)
 {
 	t_2d_grid	*head;
 	t_2d_grid	*temp;
@@ -57,14 +57,14 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 
 	temp_3d = head_3d;
 	head = NULL;
-	head = create_2d_point(head, temp_3d)
+	head = create_2d_point(*head, temp_3d)
 	if (!head)
-		return (grid_lstclear(&head_3d), NULL);
+		return (grid_lstclear(head_3d), NULL);
 	while (temp_3d != NULL)
 	{
 		temp = create_2d_point(head, temp_3d);
 		if (!temp)
-			return (grid_lstclear(&head_3d, &head), NULL);
+			return (grid_lstclear(head_3d, &head), NULL);
 	}
 	// is 3d_grid still needed -- look for free point
 	return (head);

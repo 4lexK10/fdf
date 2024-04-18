@@ -20,8 +20,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# define X 1
-# define Y 0
 
 # include <stdio.h>
 
@@ -73,7 +71,7 @@ typedef struct s_3x3
 t_3d_grid	*create_3d_grid(int fd, t_3d_grid **head);
 void		grid_lstclear(t_3d_grid **lst);
 void	free_ptr_array(char ***s);
-
+t_2d_grid	*bresenham_line(int x0, int x1, int y0, int y1);
 //void    put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
 //void    put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
 

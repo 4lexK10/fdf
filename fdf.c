@@ -12,22 +12,6 @@
 
 #include "fdf.h"
 
-/* int	main(void)
-{
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 0, 0, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-} */
-
 int main(int ac, char **av)
 {
 /* 	void	*mlx;
@@ -36,20 +20,20 @@ int main(int ac, char **av)
 /* 	char	*str;
 	int		fd; */
 	int		fd;
-	t_3d_grid	*head;
-	t_3d_grid	*temp;
+	t_3d_grid	*head_3d;
+	t_2d_grid	*head_2d;
 
 	if (ac != 2)
 		return (0);
 	fd = open(av[1], O_RDONLY);
-	head = NULL;
-	create_3d_grid(fd, &head);
-	temp = head;
-	while (temp != NULL)
-	{
-		printf("x = %d\ny = %d\nz = %d\n", temp->x, temp->y, temp->z);
-		temp = temp->next;
-	}
+	head_3d = NULL;
+	head_2d = NULL;
+	head_3d = create_3d_grid(fd, &head_3d);
+	if (!head_3d)
+		return (0);
+	head_2d = create_2d_grid(&head_3d);
+	if (!head_2d)
+		return (grid_lstclear(&head_3d), 0);
 /* 	mlx = mlx_init();
 	if (!mlx)
 		return (0); */

@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-static float	matrix_calc(t_3d_grid *point_3d, int x)
+static int	matrix_calc(t_3d_grid *point_3d, int x)
 {
 	t_3x3	rotation_matrix;
 	t_3x1	a;
@@ -22,15 +22,14 @@ static float	matrix_calc(t_3d_grid *point_3d, int x)
 	b.x = rotation_matrix.x_x * a.x + rotation_matrix.x_y * a.y + rotation_atrix.x_z * a.z; 
 	b.y = rotation_matrix.y_x * a.x + rotation_matrix.y_y * a.y + rotation_atrix.y_z * a.z; 
 	if (x)
-		return (b.x);
-	return (b.y);
+		return (round(b.x));
+	return (round(b.y));
 }
 
 static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp)
 {
 	t_2d_grid	*new_point;
 	t_2d_grid	*temp;
-
 	new_point = (t_2d_grid *)malloc(sizeof(t_2d_grid));
 	if (!new_point)
 		return (NULL);

@@ -12,12 +12,18 @@ t_2d_grid	*create_line(t_2d_grid *head)
 
 }
 
+static swap_coordinates(int x0,int x1,int y0,int y1, int get_x)
+{
+	
+}
 
 t_2d_grid	*bresenham_algo(int x0,int x1,int y0,int y1, int get_x)
 {
 	int	dx;
 	int	dy;
 	int	decision_param;
+
+	if (y1 > y0)
 
 	dx = x1 - x0;
 	dy = y1 - y0;

@@ -14,12 +14,10 @@
 
 int main(int ac, char **av)
 {
-/* 	void	*mlx;
-	void	*mlx_win;
-	t_data	img; */
-/* 	char	*str;
-	int		fd; */
-	int		fd;
+	void		*mlx;
+	void		*mlx_win;
+	t_data		img;
+	int			fd;
 	t_3d_grid	*head_3d;
 	t_2d_grid	*head_2d;
 
@@ -29,11 +27,13 @@ int main(int ac, char **av)
 	head_3d = NULL;
 	head_2d = NULL;
 	head_3d = create_3d_grid(fd, &head_3d);
+	close(fd);
 	if (!head_3d)
 		return (0);
 	head_2d = create_2d_grid(&head_3d);
 	if (!head_2d)
 		return (grid_lstclear(&head_3d), 0);
+	put_line_x(head_2d);
 /* 	mlx = mlx_init();
 	if (!mlx)
 		return (0); */

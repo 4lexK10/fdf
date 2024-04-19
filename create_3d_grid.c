@@ -6,7 +6,7 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:19 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/04 18:51:47 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:42:29 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ static int	create_3d_point(char *z_coordinate_char, t_3d_grid **head, int x, int
 {
 	t_3d_grid *temp;
 	t_3d_grid *new_point;
-
 	temp = *head;
-	while (temp != NULL || temp->next != NULL)
-		temp = temp->next;
+	if (temp)
+	{
+		while (temp->next != NULL)
+			temp = temp->next;
+	}
 	new_point = (t_3d_grid *)malloc(sizeof(t_3d_grid));
 	if (!new_point)
 		return (-1);
@@ -58,19 +60,21 @@ static int	create_row(int fd, t_3d_grid **head, int y)
 	return (0);
 }
 
-t_3d_grid	*create_3d_grid(int fd, t_3d_grid **head)
+t_3d_grid	*create_3d_grid(int fd)
 {
-	int	y;
-	int	res;
+	t_3d_grid	*head;
+	int			y;
+	int			res;
 
+	head = NULL;
 	y = 0;
-	res = create_row(fd, head, y);
+	res = create_row(fd, &head, y);
 	while (res == 0) // try (!res)
 	{
 		++y;
-		res = create_row(fd, head, y);
+		res = create_row(fd, &head, y);
 	}
-	if (res != 0) // try (res)
-		return (grid_lstclear(head), NULL);
-	return (*head);
+	if (res == -1) // try (res)
+		grid_3d_lstclear(&head);
+	return (head);
 }

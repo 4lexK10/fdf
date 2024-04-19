@@ -16,13 +16,16 @@ NAME			=	fdf
 
 CFLAGS			=	-Wall -Wextra -Werror 
 
-INCLUDES		=	#-I /usr/local/include
+INCLUDES		=	-I /usr/local/include
 
-SRC				=	fdf.c free_functions.c create_3d_grid.c #test.c img_build.c
+SRC				=	fdf.c free_functions.c create_3d_grid.c test.c img_build.c \
+					bresenham_line.c create_2d_grid.c
 
-LIB				=	#-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+LIB				=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 SRC_GNL			= 	gnl/get_next_line.c gnl/get_next_line_utils.c
+
+LIBFT			=	libft/libft.a
 
 OBJ_DIR			=	objs/
 
@@ -31,8 +34,8 @@ OBJ				=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 RM				=	rm -rf
 
 $(NAME):		$(OBJ_DIR) $(OBJ)
-				make -C ./libft
-				$(CC) $(CFLAGS) $(INCLUDES) $(SRC_GNL) $(OBJ) $(LIB) -o $@
+				make -C./libft
+				$(CC) $(CFLAGS) $(INCLUDES) $(SRC_GNL) $(OBJ) $(LIB) $(LIBFT) -o $@
 
 all:			$(NAME)
 
@@ -53,8 +56,6 @@ clean:
 fclean:			clean
 				make fclean -C./libft
 				$(RM) $(OBJ) $(NAME) $(OBJ_DIR)
-				
-				
 
 re:				fclean $(NAME)
 

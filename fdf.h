@@ -37,6 +37,7 @@ typedef struct			s_2d_grid
 	int					x;
 	int					y;
 	struct	s_2d_grid	*next;
+	struct	s_2d_grid	*under;
 }						t_2d_grid;
 
 typedef struct			s_3d_grid
@@ -67,12 +68,14 @@ typedef struct s_3x3
 	int			z_z;
 }				t_3x3;
 
-//void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
-t_3d_grid	*create_3d_grid(int fd, t_3d_grid **head);
-void		grid_lstclear(t_3d_grid **lst);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+t_3d_grid	*create_3d_grid(int fd);
+t_2d_grid	*create_2d_grid(t_3d_grid *head_3d);
+void		grid_3d_lstclear(t_3d_grid **lst);
+void		grid_2d_lstclear(t_2d_grid **lst);
 void	free_ptr_array(char ***s);
 t_2d_grid	*bresenham_line(int x0, int x1, int y0, int y1);
-//void    put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
-//void    put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
+void    put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
+void    put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
 
 #endif

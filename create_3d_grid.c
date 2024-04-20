@@ -6,7 +6,7 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:19 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/19 20:42:29 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:29:11 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,10 @@ t_3d_grid	*create_3d_grid(int fd)
 	}
 	if (res == -1) // try (res)
 		grid_3d_lstclear(&head);
+/* 	for (t_3d_grid *temp = head; temp != NULL; temp = temp->next)
+	{
+		printf("(%d, %d, z) ", temp->x, temp->y);
+	}
+	printf("\n"); */
 	return (head);
 }

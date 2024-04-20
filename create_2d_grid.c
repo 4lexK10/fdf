@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_2d_grid.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/20 16:43:13 by akloster          #+#    #+#             */
+/*   Updated: 2024/04/20 17:41:45 by akloster         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static int	matrix_calc(t_3d_grid *point_3d, int x)
@@ -21,7 +33,7 @@ static int	matrix_calc(t_3d_grid *point_3d, int x)
 	a.z = point_3d->z;
 	b.x = rota_3x3.x_x * a.x + rota_3x3.x_y * a.y + rota_3x3.x_z * a.z; 
 	b.y = rota_3x3.y_x * a.x + rota_3x3.y_y * a.y + rota_3x3.y_z * a.z; 
-	if (x)
+	if (x == 1)
 		return (round(b.x));
 	return (round(b.y));
 }
@@ -51,8 +63,8 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 static void	vertical_link(t_2d_grid *grid_2d, t_3d_grid *grid_3d)
 {
 	int			cnt;
-	t_2d_grid 	shift;
-	
+	t_2d_grid 	*shift;
+
 	cnt = 1;
 	shift = grid_2d;
 	while (grid_3d->x != 0)
@@ -66,7 +78,7 @@ static void	vertical_link(t_2d_grid *grid_2d, t_3d_grid *grid_3d)
 	{
 		grid_2d->under = shift;
 		shift = shift->next;
-		grid_2d = grid_2d->next
+		grid_2d = grid_2d->next;
 	}
 	while (grid_2d != NULL)
 	{
@@ -96,5 +108,8 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 		temp_3d = temp_3d->next;
 	}
 	vertical_link(head, head_3d);
+/* 		for (t_2d_grid *temp = head; temp != NULL; temp = temp->next)
+			printf("(%d, %d) ", temp->x, temp->y);
+		printf("\n"); */
 	return (grid_3d_lstclear(&head_3d), head);
 }

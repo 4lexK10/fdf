@@ -28,9 +28,10 @@ static void	put_grid(t_2d_grid *head, t_data *img)
 		initial.y = temp->y;
 		final.x = temp->next->x;
 		final.y = temp->next->y;
-		bresenham_algo(initial, final, img);
+		draw_line(initial, final, img);
 		temp = temp->next;
 	}
+
 	while (head->next->x > head->x)
 	{
 		temp = head;
@@ -40,7 +41,7 @@ static void	put_grid(t_2d_grid *head, t_data *img)
 			initial.y = temp->y;
 			final.x = temp->under->x;
 			final.y = temp->under->y;
-			bresenham_algo(initial, final, img);
+			draw_line(initial, final, img);
 			temp = temp->under;
 		}
 		head = head->next;
@@ -52,10 +53,9 @@ static void	put_grid(t_2d_grid *head, t_data *img)
 		initial.y = temp->y;
 		final.x = temp->under->x;
 		final.y = temp->under->y;
-		bresenham_algo(initial, final, img);
+		draw_line(initial, final, img);
 		temp = temp->under;
 	}
-	printf("test\n");
 }
 
 int main(int ac, char **av)

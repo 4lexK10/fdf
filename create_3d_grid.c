@@ -6,7 +6,7 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:11:19 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/20 17:29:11 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:21:14 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static int	create_3d_point(char *z_coordinate_char, t_3d_grid **head, int x, int
 	new_point = (t_3d_grid *)malloc(sizeof(t_3d_grid));
 	if (!new_point)
 		return (-1);
-	new_point->x = x;
-	new_point->y = y;
-	new_point->z = ft_atoi(z_coordinate_char);
+	new_point->x = x * 25;
+	new_point->y = y * 25;
+	new_point->z = ft_atoi(z_coordinate_char) * 25;
 	new_point->next = NULL;
 	if (!temp)
 		*head = new_point;

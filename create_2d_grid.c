@@ -6,11 +6,27 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:13 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/21 23:54:47 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:19:53 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static t_3x3	get_rota_matrix(float x_rota, float y_rota)
+{
+	t_3x3	rota_3x3;
+
+	rota_3x3.x_x = cosf(y_rota);
+	rota_3x3.x_y = 0;
+	rota_3x3.x_z = -sinf(y_rota);
+	rota_3x3.y_x = sinf(x_rota) * sinf(y_rota);
+	rota_3x3.y_y = cosf(x_rota);
+	rota_3x3.y_z = sinf(x_rota) * cosf(y_rota);
+	rota_3x3.z_x = cosf(x_rota) * sinf(y_rota);
+	rota_3x3.z_y = -sinf(y_rota);
+	rota_3x3.z_z = cosf(x_rota) * cosf(y_rota);
+	return (rota_3x3);
+}
 
 static int	matrix_calc(t_3d_grid *point_3d, int x)
 {
@@ -18,16 +34,7 @@ static int	matrix_calc(t_3d_grid *point_3d, int x)
 	t_3x1	a;
 	t_3x1	b;
 
-	//assign these values once in fdf.h or assign once in main
-	rota_3x3.x_x = sqrt(3) / sqrt(6);
-	rota_3x3.x_y = 0;
-	rota_3x3.x_z = -(sqrt(3)) / sqrt(6);
-	rota_3x3.y_x = 1 / sqrt(6);
-	rota_3x3.y_y = 2 / sqrt(6);
-	rota_3x3.y_z = 1 / sqrt(6);
-	rota_3x3.z_x = sqrt(2) / sqrt(6);
-	rota_3x3.z_y = -(sqrt(2)) / sqrt(6);
-	rota_3x3.z_z = sqrt(2) / sqrt(6);
+	rota_3x3 = get_rota_matrix(asinf(tanf(-3.14159 * powf(6, -1))), -3.14159 * powf(4, -1));
 	a.x = point_3d->x;
 	a.y = point_3d->y;
 	a.z = point_3d->z;
@@ -45,8 +52,8 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 	new_point = (t_2d_grid *)malloc(sizeof(t_2d_grid));
 	if (!new_point)
 		return (NULL);
-	new_point->x = matrix_calc(temp_3d, 1);
-	new_point->y = matrix_calc(temp_3d, 0);
+	new_point->point.x = matrix_calc(temp_3d, 1);
+	new_point->point.y = matrix_calc(temp_3d, 0);
 	new_point->next = NULL;
 	new_point->under = NULL;
 	if (!head)
@@ -99,10 +106,10 @@ static void	set_1st_quad(t_2d_grid *head)
 	temp = head;
 	while (temp != NULL)
 	{
-		if (temp->x < min_x)
-			min_x = temp->x;
-		if (temp->y < min_y)
-			min_y = temp->y;
+		if (temp->point.x < min_x)
+			min_x = temp->point.x;
+		if (temp->point.y < min_y)
+			min_y = temp->point.y;
 		temp = temp->next;
 	}
 	printf("min_x %d min_y %d\n", min_x, min_y);
@@ -111,8 +118,8 @@ static void	set_1st_quad(t_2d_grid *head)
 	{
 		while (temp != NULL)
 		{
-			temp->x += -min_x;
-			temp->y += -min_y;
+			temp->point.x += -min_x;
+			temp->point.y += -min_y;
 			temp = temp->next;
 		}
 	}

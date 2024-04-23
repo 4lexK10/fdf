@@ -32,19 +32,18 @@ typedef struct  s_data
 	int		    endian;
 }               t_data;
 
-typedef struct			s_2d_grid
-{
-	int					x;
-	int					y;
-	struct	s_2d_grid	*next;
-	struct	s_2d_grid	*under;
-}						t_2d_grid;
-
 typedef struct			s_2d_point
 {
 	int	x;
 	int	y;
 }						t_2d_point;
+
+typedef struct			s_2d_grid
+{
+	t_2d_point			point;
+	struct	s_2d_grid	*next;
+	struct	s_2d_grid	*under;
+}						t_2d_grid;
 
 typedef struct			s_3d_grid
 {

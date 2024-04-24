@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:04 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/23 22:07:36 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:37:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static	t_2d_grid	*create_2d_point(t_2d_grid **head, t_2d_point pixel, int res)
 	new_pixel = (t_2d_grid *)malloc(sizeof(t_2d_grid));
 	if (!new_pixel)
 		return (NULL);
-	if (res == 1 || res == 3)
+/* 	if (res == 1 || res == 3)
 		swap_coordinates(&pixel, NULL);
 	if (res == 2 || res == 3)
-		pixel.y *= -1;
+		pixel.y *= -1; */
 	new_pixel->point = pixel;
 	/* printf("(%d %d)\n", pixel.x, pixel.y); */
 	new_pixel->next = NULL;
@@ -99,11 +99,20 @@ static int	find_case(t_2d_point *i, t_2d_point *f)
 		return (find_case(i, f) + 2);
 	}
 	else if (dy > dx) // m > 1
-	{
-		swap_coordinates(i, f);
-		return (1);
-	}
+		return (swap_coordinates(i, f), 1);
 	return (0);
+}
+
+static void	switch_values(t_2d_grid *head, int res)
+{
+	while (head != NULL);
+	{
+		if (res == 1 || res == 3)
+			swap_coordinates(&(head->point), NULL);
+		if (res == 2 || res == 3)
+			head->point.y *= -1;
+		head = head->next;
+	}
 }
 
 int	draw_line(t_2d_point i, t_2d_point f, t_data *img)
@@ -112,16 +121,20 @@ int	draw_line(t_2d_point i, t_2d_point f, t_data *img)
 	t_2d_point	pixel;
 	int			decision_param;
 	int			res;
+	int			incr;
 
 	head = NULL;
-	decision_param = 2 * (f.x - i.x) - (f.y - i.y);
 	res = find_case(&i, &f);
+	incr = i.x;
+	decision_param = 2 * (f.y - i.y) - (f.x - i.x);
 	/* printf("(%d, %d) (%d, %d) %d\n", i.x, i.y, f.x, f.y, res); */
-	while (pixel.y <= f.y)
+	while (incr <= f.x)
 	{
 		pixel = bresenham_algo(i, f, &decision_param, head);
 		head = create_2d_point(&head, pixel, res);
+		++incr;
 	}
+	switch_values(head, res);
 	if (!head)
 		return (grid_2d_lstclear(&head), 1);
 	while (head != NULL)

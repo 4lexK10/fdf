@@ -6,7 +6,7 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:13 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/23 19:19:53 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:25:36 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ static t_3x3	get_rota_matrix(float x_rota, float y_rota)
 	return (rota_3x3);
 }
 
-static int	matrix_calc(t_3d_grid *point_3d, int x)
+int	matrix_calc(t_3d_grid *point_3d, int x)
 {
 	t_3x3	rota_3x3;
 	t_3x1	a;
 	t_3x1	b;
 
-	rota_3x3 = get_rota_matrix(asinf(tanf(-3.14159 * powf(6, -1))), -3.14159 * powf(4, -1));
+	// rota_3x3 = get_rota_matrix(asinf(tanf(-3.14159 * powf(6, -1))), -3.14159 * powf(6, -1));
+	rota_3x3 = get_rota_matrix(asinf(tanf(3.14159 * powf(6, -1))), 3.14159 * powf(4, -1) * 1);
 	a.x = point_3d->x;
 	a.y = point_3d->y;
 	a.z = point_3d->z;
@@ -52,8 +53,8 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 	new_point = (t_2d_grid *)malloc(sizeof(t_2d_grid));
 	if (!new_point)
 		return (NULL);
-	new_point->point.x = matrix_calc(temp_3d, 1);
-	new_point->point.y = matrix_calc(temp_3d, 0);
+	new_point->point.x = matrix_calc(temp_3d, 1); //(sqrt(2) / 2 * (temp_3d->x - temp_3d->y));
+	new_point->point.y = matrix_calc(temp_3d, 0); //(sqrt(6) / 6 * (temp_3d->x + temp_3d->y) - sqrt(6) / 3 * temp_3d->z);
 	new_point->next = NULL;
 	new_point->under = NULL;
 	if (!head)
@@ -95,36 +96,6 @@ static void	vertical_link(t_2d_grid *grid_2d, t_3d_grid *grid_3d)
 	}
 }
 
-static void	set_1st_quad(t_2d_grid *head)
-{
-	int			min_x;
-	int			min_y;
-	t_2d_grid	*temp;
-
-	min_x = 0;
-	min_y = 0;
-	temp = head;
-	while (temp != NULL)
-	{
-		if (temp->point.x < min_x)
-			min_x = temp->point.x;
-		if (temp->point.y < min_y)
-			min_y = temp->point.y;
-		temp = temp->next;
-	}
-	printf("min_x %d min_y %d\n", min_x, min_y);
-	temp = head;
-	if (min_x < 0 || min_y < 0)
-	{
-		while (temp != NULL)
-		{
-			temp->point.x += -min_x;
-			temp->point.y += -min_y;
-			temp = temp->next;
-		}
-	}
-}
-
 t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 {
 	t_2d_grid	*head;
@@ -146,7 +117,13 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 		temp_3d = temp_3d->next;
 	}
 	vertical_link(head, head_3d);
-	set_1st_quad(head);
+/* 	temp = head;
+	while (temp != NULL)
+	{
+		++temp->point.x;
+		++temp->point.y;
+		temp = temp->next;
+	} */
 /* 	for (t_2d_grid *temp = head; temp != NULL; temp = temp->next)
 	{	
 		printf("(%d, %d) ", temp->x, temp->y);
@@ -166,5 +143,5 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d)
 			printf("\n");
 	}
 	printf("\n"); */
-	return (grid_3d_lstclear(&head_3d), head);
+	return (head);
 }

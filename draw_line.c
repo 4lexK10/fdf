@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:04 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/24 13:37:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/25 22:23:07 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_2d_point	bresenham_algo(t_2d_point i, t_2d_point f, int *param, t_2d_gr
 	return (pixel);
 }
 
-static	t_2d_grid	*create_2d_point(t_2d_grid **head, t_2d_point pixel, int res)
+static	t_2d_grid	*create_2d_point(t_2d_grid **head, t_2d_point pixel)
 {
 	t_2d_grid	*new_pixel;
 	t_2d_grid	*temp;
@@ -105,7 +105,7 @@ static int	find_case(t_2d_point *i, t_2d_point *f)
 
 static void	switch_values(t_2d_grid *head, int res)
 {
-	while (head != NULL);
+	while (head != NULL)
 	{
 		if (res == 1 || res == 3)
 			swap_coordinates(&(head->point), NULL);
@@ -131,7 +131,7 @@ int	draw_line(t_2d_point i, t_2d_point f, t_data *img)
 	while (incr <= f.x)
 	{
 		pixel = bresenham_algo(i, f, &decision_param, head);
-		head = create_2d_point(&head, pixel, res);
+		head = create_2d_point(&head, pixel);
 		++incr;
 	}
 	switch_values(head, res);
@@ -139,7 +139,7 @@ int	draw_line(t_2d_point i, t_2d_point f, t_data *img)
 		return (grid_2d_lstclear(&head), 1);
 	while (head != NULL)
 	{
-		my_mlx_pixel_put(img, head->point.x, head->point.y, 0xffffff);
+		my_mlx_pixel_put(img, head->point.x, head->point.y, 0xffffff); //abs(head->point.y - 1300)
 		head = head->next;
 	}
 	return (grid_2d_lstclear(&head), 0);

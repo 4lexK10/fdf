@@ -82,5 +82,9 @@ void		free_ptr_array(char ***s);
 int			draw_line(t_2d_point i, t_2d_point f, t_data *img);
 void    	put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
 void		put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
+/* void		calibrate(t_2d_grid	*head); */
+int			abs(int nbr);
+int			matrix_calc(t_3d_grid *point_3d, int x);
+void		set_1st_quad(t_2d_grid *head);
 
 #endif

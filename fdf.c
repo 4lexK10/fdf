@@ -16,8 +16,12 @@ static int	get_clmn_nbr(t_3d_grid *head)
 {
 	int		i;
 
+	i = 1;
 	while (head->x < head->next->x)
-		head = 
+	{
+		++i;
+		head = head->next;
+	}
 	return (i);
 }
 
@@ -32,7 +36,6 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 	printf("column nbr: %d\n", clmn_nbr);
 	while (temp->next != NULL)
 	{
-		// printf("f.x%d i.x%d\n", temp->next->x, temp->x);
 		if (pos == clmn_nbr)
 		{
 			temp = temp->next;
@@ -56,27 +59,43 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 	}
 }
 
+static	int	create_load_map(t_data *img, char *path)
+{
+	t_2d_grid	*head_2d;
+	t_3d_grid	*head_3d;
+	int			fd;
+	int			nbr;
+
+	head_2d = NULL;
+	head_3d = NULL;
+	fd = open(path, O_RDONLY);
+	head_3d = create_3d_grid(fd);
+	close(fd);
+	if (!head_3d)
+		return (1);
+	nbr = get_clmn_nbr(head_3d);
+	head_2d = create_2d_grid(head_3d);
+	if (!head_2d)
+		return (grid_3d_lstclear(&head_3d), 1);
+/* 	calibrate(head_2d); */
+	set_1st_quad(head_2d);
+	put_grid(head_2d, img, nbr);
+	return (grid_3d_lstclear(&head_3d), 0);
+}
+
 int main(int ac, char **av)
 {
 	void		*mlx;
 	void		*mlx_win;
 	t_data		img;
-	int			fd;
-	t_2d_grid	*head_2d;
 
 	if (ac != 2)
-		return (0);
-	fd = open(av[1], O_RDONLY);
-	head_2d = NULL;
-	head_2d = create_2d_grid(create_3d_grid(fd));
-	close(fd);
-	if (!head_2d)
 		return (0);
 	mlx = mlx_init();
 	if (!mlx)
 		return (0);
-	mlx_win = mlx_new_window (mlx , 1920, 1080, "fdf");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	mlx_win = mlx_new_window (mlx , 2300, 1300, "fdf");
+	img.img = mlx_new_image(mlx, 2300, 1300);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 /* 	for (t_2d_grid *tempi = head_2d; tempi->next->x > tempi->x; tempi = tempi->next)
 	{
@@ -102,13 +121,13 @@ int main(int ac, char **av)
 		if (temp->next != NULL && temp->next->point.x < temp->point.x)
 			printf("\n");
 	} */
-	int nbr = get_clmn_nbr(av[1]);
-	for (t_2d_grid *tempi = head_2d; (nbr--) >= 0; tempi = tempi->next)
+/* 	for (t_2d_grid *tempi = head_2d; (nbr--) >= 0; tempi = tempi->next)
 	{
 		for (t_2d_grid *temp = tempi; temp != NULL; temp = temp->under)
 			my_mlx_pixel_put(&img, temp->point.x, temp->point.y, 0xffffff);
-	}
-	put_grid(head_2d, &img, nbr);
+	} */
+	if (create_load_map(&img, av[1]))
+		return (0);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return (0);

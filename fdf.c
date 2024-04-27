@@ -41,10 +41,12 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 			temp = temp->next;
 			pos = 1;
 		}
+		/* printf("(%d, %d) ", temp->point.x, temp->point.y); */
 		draw_line(temp->point, temp->next->point, img);
 		temp = temp->next;
 		++pos;
 	}
+	printf("\n");
 	pos = 1;
 	while (pos < clmn_nbr + 1)
 	{
@@ -77,8 +79,14 @@ static	int	create_load_map(t_data *img, char *path)
 	head_2d = create_2d_grid(head_3d);
 	if (!head_2d)
 		return (grid_3d_lstclear(&head_3d), 1);
-/* 	calibrate(head_2d); */
-	set_1st_quad(head_2d);
+	calibrate(head_2d, head_3d);
+	t_2d_grid *temp = head_2d;
+	while (temp->next != NULL)
+	{
+		temp = temp->next;
+	}
+	printf("testttt(%d, %d)\n", temp->point.x, temp->point.y);
+	
 	put_grid(head_2d, img, nbr);
 	return (grid_3d_lstclear(&head_3d), 0);
 }
@@ -94,8 +102,8 @@ int main(int ac, char **av)
 	mlx = mlx_init();
 	if (!mlx)
 		return (0);
-	mlx_win = mlx_new_window (mlx , 2300, 1300, "fdf");
-	img.img = mlx_new_image(mlx, 2300, 1300);
+	mlx_win = mlx_new_window (mlx , WIDTH, HEIGHT, "fdf");
+	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 /* 	for (t_2d_grid *tempi = head_2d; tempi->next->x > tempi->x; tempi = tempi->next)
 	{

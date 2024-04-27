@@ -6,13 +6,13 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:13 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/25 22:25:36 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/27 20:56:16 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static t_3x3	get_rota_matrix(float x_rota, float y_rota)
+/* static t_3x3	get_rota_matrix(float x_rota, float y_rota)
 {
 	t_3x3	rota_3x3;
 
@@ -44,7 +44,7 @@ int	matrix_calc(t_3d_grid *point_3d, int x)
 	if (x == 1)
 		return (round(b.x));
 	return (round(b.y));
-}
+} */
 
 static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 {
@@ -53,8 +53,8 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 	new_point = (t_2d_grid *)malloc(sizeof(t_2d_grid));
 	if (!new_point)
 		return (NULL);
-	new_point->point.x = matrix_calc(temp_3d, 1); //(sqrt(2) / 2 * (temp_3d->x - temp_3d->y));
-	new_point->point.y = matrix_calc(temp_3d, 0); //(sqrt(6) / 6 * (temp_3d->x + temp_3d->y) - sqrt(6) / 3 * temp_3d->z);
+	new_point->point.x = isometric_projection(temp_3d, 0, 1);
+	new_point->point.y = isometric_projection(temp_3d, 1, 1);
 	new_point->next = NULL;
 	new_point->under = NULL;
 	if (!head)

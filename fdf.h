@@ -20,8 +20,10 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
+# define HEIGHT 1000
+# define WIDTH	1000
 
-# include <stdio.h>
+# include <stdio.h>//<<------ DELETE!!
 
 typedef struct  s_data
 {
@@ -41,6 +43,7 @@ typedef struct			s_2d_point
 typedef struct			s_2d_grid
 {
 	t_2d_point			point;
+	int					color;
 	struct	s_2d_grid	*next;
 	struct	s_2d_grid	*under;
 }						t_2d_grid;
@@ -50,6 +53,7 @@ typedef struct			s_3d_grid
 	int					x;
 	int					y;
 	int					z;
+	int					color;
 	struct	s_3d_grid	*next;
 }						t_3d_grid;
 
@@ -82,9 +86,9 @@ void		free_ptr_array(char ***s);
 int			draw_line(t_2d_point i, t_2d_point f, t_data *img);
 void    	put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
 void		put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
-/* void		calibrate(t_2d_grid	*head); */
-int			abs(int nbr);
+void		calibrate(t_2d_grid	*head, t_3d_grid *head_3d);
 int			matrix_calc(t_3d_grid *point_3d, int x);
-void		set_1st_quad(t_2d_grid *head);
+int			isometric_projection(t_3d_grid *point_3d, int want_y, int scale);
+void		min_point(t_2d_grid *head, t_3d_grid **least_x, t_3d_grid **least_y);
 
 #endif

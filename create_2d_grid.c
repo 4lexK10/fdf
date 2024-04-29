@@ -6,7 +6,7 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:13 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/27 20:56:16 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/29 22:11:58 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 		return (NULL);
 	new_point->point.x = isometric_projection(temp_3d, 0, 1);
 	new_point->point.y = isometric_projection(temp_3d, 1, 1);
+	new_point->color = temp_3d->color;
 	new_point->next = NULL;
 	new_point->under = NULL;
 	if (!head)

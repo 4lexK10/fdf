@@ -38,6 +38,7 @@ typedef struct			s_2d_point
 {
 	int	x;
 	int	y;
+	int color;
 }						t_2d_point;
 
 typedef struct			s_2d_grid
@@ -83,12 +84,12 @@ t_2d_grid	*create_2d_grid(t_3d_grid *head_3d);
 void		grid_3d_lstclear(t_3d_grid **lst);
 void		grid_2d_lstclear(t_2d_grid **lst);
 void		free_ptr_array(char ***s);
-int			draw_line(t_2d_point i, t_2d_point f, t_data *img);
+int			draw_line(t_2d_point i, t_2d_point f, t_data *img, int color);
 void    	put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
 void		put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
 void		calibrate(t_2d_grid	*head, t_3d_grid *head_3d);
 int			matrix_calc(t_3d_grid *point_3d, int x);
 int			isometric_projection(t_3d_grid *point_3d, int want_y, int scale);
-void		min_point(t_2d_grid *head, t_3d_grid **least_x, t_3d_grid **least_y);
+void		min_point(t_2d_grid *head, t_3d_grid **min_x, t_3d_grid **min_y);
 
 #endif

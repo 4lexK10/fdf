@@ -17,6 +17,13 @@ static int	get_clmn_nbr(t_3d_grid *head)
 	int		i;
 
 	i = 1;
+/* 	for (t_3d_grid *temp = head; temp != NULL; temp = temp->next)
+	{
+		printf("(%d, %d, %d) ", temp->x, temp->y, temp->z);
+		if (temp->next != NULL && temp->next->x < temp->x)
+			printf("\n");
+	}
+	printf("\n"); */
 	while (head->x < head->next->x)
 	{
 		++i;
@@ -34,6 +41,13 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 	pos = 1;
 	temp = head;
 	printf("column nbr: %d\n", clmn_nbr);
+/*  	for (t_2d_grid *temp = head; temp != NULL; temp = temp->next)
+	{	
+		printf("(%d, %d) ", temp->point.x, temp->point.y);
+		if (temp->next != NULL && temp->next->point.x < temp->point.x)
+			printf("\n");
+	}
+	printf("\n"); */
 	while (temp->next != NULL)
 	{
 		if (pos == clmn_nbr)
@@ -42,18 +56,18 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 			pos = 1;
 		}
 		/* printf("(%d, %d) ", temp->point.x, temp->point.y); */
-		draw_line(temp->point, temp->next->point, img);
+		/* printf("teeeeest\n"); */
+		draw_line(temp->point, temp->next->point, img, temp->color);
 		temp = temp->next;
 		++pos;
 	}
-	printf("\n");
 	pos = 1;
 	while (pos < clmn_nbr + 1)
 	{
 		temp = head;
 		while (temp->under != NULL)
 		{
-			draw_line(temp->point, temp->under->point, img);
+			draw_line(temp->point, temp->under->point, img, temp->color);
 			temp = temp->under;
 		}
 		head = head->next;
@@ -71,6 +85,8 @@ static	int	create_load_map(t_data *img, char *path)
 	head_2d = NULL;
 	head_3d = NULL;
 	fd = open(path, O_RDONLY);
+	
+	printf("test\n");
 	head_3d = create_3d_grid(fd);
 	close(fd);
 	if (!head_3d)
@@ -80,14 +96,8 @@ static	int	create_load_map(t_data *img, char *path)
 	if (!head_2d)
 		return (grid_3d_lstclear(&head_3d), 1);
 	calibrate(head_2d, head_3d);
-	t_2d_grid *temp = head_2d;
-	while (temp->next != NULL)
-	{
-		temp = temp->next;
-	}
-	printf("testttt(%d, %d)\n", temp->point.x, temp->point.y);
-	
 	put_grid(head_2d, img, nbr);
+	/* printf("test\n"); */
 	return (grid_3d_lstclear(&head_3d), 0);
 }
 

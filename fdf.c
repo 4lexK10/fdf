@@ -33,7 +33,7 @@ static int	get_clmn_nbr(t_3d_grid *head)
 }
 
 
-static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
+/* static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 {
 	t_2d_grid	*temp;
 	int			pos;
@@ -41,13 +41,13 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 	pos = 1;
 	temp = head;
 	printf("column nbr: %d\n", clmn_nbr);
-/*  	for (t_2d_grid *temp = head; temp != NULL; temp = temp->next)
-	{	
-		printf("(%d, %d) ", temp->point.x, temp->point.y);
-		if (temp->next != NULL && temp->next->point.x < temp->point.x)
-			printf("\n");
-	}
-	printf("\n"); */
+ 	// for (t_2d_grid *temp = head; temp != NULL; temp = temp->next)
+	// {	
+	// 	printf("(%d, %d) ", temp->point.x, temp->point.y);
+	// 	if (temp->next != NULL && temp->next->point.x < temp->point.x)
+	// 		printf("\n");
+	// }
+	// printf("\n");
 	while (temp->next != NULL)
 	{
 		if (pos == clmn_nbr)
@@ -55,8 +55,8 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 			temp = temp->next;
 			pos = 1;
 		}
-		/* printf("(%d, %d) ", temp->point.x, temp->point.y); */
-		/* printf("teeeeest\n"); */
+		// printf("(%d, %d) ", temp->point.x, temp->point.y);
+		// printf("teeeeest\n");
 		draw_line(temp->point, temp->next->point, img, temp->color);
 		temp = temp->next;
 		++pos;
@@ -74,8 +74,8 @@ static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 		++pos;
 	}
 }
-
-static	int	create_load_map(t_data *img, char *path)
+ */
+static	int	create_load_map(/* t_data *img,  */char *path)
 {
 	t_2d_grid	*head_2d;
 	t_3d_grid	*head_3d;
@@ -92,13 +92,13 @@ static	int	create_load_map(t_data *img, char *path)
 	if (!head_3d)
 		return (1);
 	nbr = get_clmn_nbr(head_3d);
-	head_2d = create_2d_grid(head_3d);
+/* 	head_2d = create_2d_grid(head_3d);
 	if (!head_2d)
 		return (grid_3d_lstclear(&head_3d), 1);
 	calibrate(head_2d, head_3d);
-	put_grid(head_2d, img, nbr);
+	put_grid(head_2d, img, nbr); */
 	/* printf("test\n"); */
-	return (grid_3d_lstclear(&head_3d), 0);
+	return (/* grid_3d_lstclear(&head_3d),  */0);
 }
 
 int main(int ac, char **av)
@@ -144,7 +144,7 @@ int main(int ac, char **av)
 		for (t_2d_grid *temp = tempi; temp != NULL; temp = temp->under)
 			my_mlx_pixel_put(&img, temp->point.x, temp->point.y, 0xffffff);
 	} */
-	if (create_load_map(&img, av[1]))
+	if (create_load_map(/* &img,  */av[1]))
 		return (0);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);

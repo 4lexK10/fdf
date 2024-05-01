@@ -6,7 +6,7 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:00:23 by akloster          #+#    #+#             */
-/*   Updated: 2023/11/01 13:47:06 by akloster         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:42:39 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_memcmp(void const *s1, void const *s2, size_t n)
 int main(void)
 {
 	char str1[] = "Hello\0";
-	char str2[] = "Hello\200";
+	char str2[] = "Hello\0";
 	size_t lim = 6;
 	printf("ft_memcmp = %d\n   memcmp = %d\n", 
 	ft_memcmp(str1, str2, lim), memcmp(str1, str2, lim));

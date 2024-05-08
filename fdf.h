@@ -94,5 +94,6 @@ int			matrix_calc(t_3d_grid *point_3d, int x);
 int			isometric_projection(t_3d_grid *point_3d, int want_y, int scale);
 void		min_point(t_2d_grid *head, t_3d_grid **min_x, t_3d_grid **min_y);
 void		my_free(char **str);
+void		free_map(int ***map, t_2d_point dimensions);
 
 #endif

@@ -46,6 +46,26 @@ void	grid_2d_lstclear(t_2d_grid **lst)
 	}
 }
 
+void	free_map(int ***map, t_2d_point dimensions)
+{
+	int	i;
+
+	i = -1;
+	if (*map && **map)
+	{
+		while ((*map)[++i] && i < dimensions.y)
+		{
+			free((*map)[i]);
+			(*map)[i] = NULL;
+		}
+	}
+	if (*map)
+	{
+		free(*map);
+		*map = NULL;
+	}
+}
+
 void	free_ptr_array(char ***s)
 {
 	int	i;

@@ -33,12 +33,12 @@ int	**create_3d(fd)
 	{
 		map[i] = (int *)malloc(sizeof(int) * (dimensions.x * 3));
 		if (!map[i])
-			return (NULL);
+			return (fr_map(&map), NULL);
 	}
 	while (++y < dimensions.y)
 	{
 		if (fill_lines(map[y], y, dimensions.x, fd) == FAIL)
-			return (NULL);
+			return (free_map(&map), NULL);
 	}
 	return (map);
 }

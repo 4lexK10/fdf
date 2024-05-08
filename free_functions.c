@@ -65,3 +65,13 @@ void	free_ptr_array(char ***s)
 		*s = NULL;
 	}
 }
+
+void	my_free(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
+

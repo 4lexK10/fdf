@@ -6,11 +6,73 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:04 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/29 22:17:42 by akloster         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:23:43 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static void			swap_coordinates(t_2d_point *i, t_2d_point *f);
+static t_2d_point	bresenham_algo(t_2d_point i, t_2d_point f, int *param, t_2d_grid *head);
+static	t_2d_grid	*create_2d_point(t_2d_grid **head, t_2d_point pixel);
+static int			find_case(t_2d_point *i, t_2d_point *f);
+static void			switch_values(t_2d_grid *head, int res);
+
+int	draw_line(t_2d_point i, t_2d_point f, t_data *img)
+{
+	t_2d_grid	*head;
+	t_2d_point	pixel;
+	int			decision_param;
+	int			res;
+	int			incr;
+
+	head = NULL;
+	res = find_case(&i, &f);
+	incr = i.x;
+	decision_param = 2 * (f.y - i.y) - (f.x - i.x);
+	/* printf("(%d, %d) (%d, %d) %d\n", i.x, i.y, f.x, f.y, res); */
+	while (incr <= f.x)
+	{
+		pixel = bresenham_algo(i, f, &decision_param, head);
+		head = create_2d_point(&head, pixel);
+		++incr;
+	}
+	switch_values(head, res);
+	if (!head)
+		return (grid_2d_lstclear(&head), 1);
+	while (head != NULL)
+	{
+		my_mlx_pixel_put(img, head->point.x, head->point.y, 0xffffff); //0xffffffabs(head->point.y - 1300)
+		head = head->next;
+	}
+	return (grid_2d_lstclear(&head), 0);
+}
+
+static int	find_case(t_2d_point *i, t_2d_point *f)
+{
+	t_2d_point	temp;
+	int			dx;
+	int			dy;
+
+	dx = f->x - i->x;
+	dy = f->y - i->y;
+	temp = *i;
+	if (dx < 0)
+	{
+		*i = *f;
+		*f = temp;
+		return (find_case(i, f));
+	}
+	else if (dx * dy < 0)  // m < 0
+	{
+		i->y = -i->y;
+		f->y = -f->y;
+		return (find_case(i, f) + 2);
+	}
+	else if (dy > dx) // m > 1
+		return (swap_coordinates(i, f), 1);
+	return (0);
+}
 
 static void	swap_coordinates(t_2d_point *i, t_2d_point *f)
 {
@@ -77,32 +139,6 @@ static	t_2d_grid	*create_2d_point(t_2d_grid **head, t_2d_point pixel)
 	return (*head);
 }
 
-static int	find_case(t_2d_point *i, t_2d_point *f)
-{
-	t_2d_point	temp;
-	int			dx;
-	int			dy;
-
-	dx = f->x - i->x;
-	dy = f->y - i->y;
-	temp = *i;
-	if (dx < 0)
-	{
-		*i = *f;
-		*f = temp;
-		return (find_case(i, f));
-	}
-	else if (dx * dy < 0)  // m < 0
-	{
-		i->y = -i->y;
-		f->y = -f->y;
-		return (find_case(i, f) + 2);
-	}
-	else if (dy > dx) // m > 1
-		return (swap_coordinates(i, f), 1);
-	return (0);
-}
-
 static void	switch_values(t_2d_grid *head, int res)
 {
 	while (head != NULL)
@@ -115,32 +151,3 @@ static void	switch_values(t_2d_grid *head, int res)
 	}
 }
 
-int	draw_line(t_2d_point i, t_2d_point f, t_data *img, int color)
-{
-	t_2d_grid	*head;
-	t_2d_point	pixel;
-	int			decision_param;
-	int			res;
-	int			incr;
-
-	head = NULL;
-	res = find_case(&i, &f);
-	incr = i.x;
-	decision_param = 2 * (f.y - i.y) - (f.x - i.x);
-	/* printf("(%d, %d) (%d, %d) %d\n", i.x, i.y, f.x, f.y, res); */
-	while (incr <= f.x)
-	{
-		pixel = bresenham_algo(i, f, &decision_param, head);
-		head = create_2d_point(&head, pixel);
-		++incr;
-	}
-	switch_values(head, res);
-	if (!head)
-		return (grid_2d_lstclear(&head), 1);
-	while (head != NULL)
-	{
-		my_mlx_pixel_put(img, head->point.x, head->point.y, color); //0xffffffabs(head->point.y - 1300)
-		head = head->next;
-	}
-	return (grid_2d_lstclear(&head), 0);
-}

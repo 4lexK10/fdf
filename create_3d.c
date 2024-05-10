@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:03:22 by akloster          #+#    #+#             */
-/*   Updated: 2024/05/05 20:28:48 by akloster         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:18:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 static char		*clean_line(char *str);
 static char		*fill_line(int ***map, int fd);
-static t_2d_point	get_array_dimensions(int fd);
 
-int	**create_3d(fd)
+int	**create_3d(fd, t_2d_point dimensions)
 {
 	int		i;
 	int		y;
 	int		**map;
-	t_2d_point	dimensions;
 
 	i = -1;
 	y = -1;
-	dimensions = get_array_dimensions(fd);
 	map = (int **)malloc(sizeof(int *) * dimensions.y);
 	if (!map)
 		return (NULL);

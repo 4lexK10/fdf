@@ -89,11 +89,13 @@ void		free_ptr_array(char ***s);
 int			draw_line(t_2d_point i, t_2d_point f, t_data *img, int color);
 void    	put_circle(int r, int x, int y, t_data *img);  				// <---- TEST (delete!)
 void		put_square(int a, int center_x, int center_y, t_data *img); // <---- TEST (delete!)
-void		calibrate(t_2d_grid	*head, t_3d_grid *head_3d);
+void	calibrate(int **map, int **map_3d, t_2d_point dimensions);
 int			matrix_calc(t_3d_grid *point_3d, int x);
 int			isometric_projection(t_3d_grid *point_3d, int want_y, int scale);
-void		min_point(t_2d_grid *head, t_3d_grid **min_x, t_3d_grid **min_y);
 void		my_free(char **str);
 void		free_map(int ***map, t_2d_point dimensions);
+t_2d_point	get_array_dimensions(int fd);
+int			**create_3d(fd, t_2d_point dimensions);
+int			**create_2d(int **map_3d);
 
 #endif

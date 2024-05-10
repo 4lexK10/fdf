@@ -15,7 +15,7 @@
 static void	set_1st_quad(int **map);
 static void	max_point(int **max_x);
 static void	min_point(int **map, int **x, int **y, t_2d_point dimensions);
-static int	check_scale_up(t_2d_grid *head, int *head_3d);
+static int	check_scale_up(int **map, t_2d_grid dimensions);
 
 void	calibrate(int **map, int **map_3d, t_2d_point dimensions)
 {

@@ -33,45 +33,48 @@ static int	get_clmn_nbr(t_3d_grid *head)
 }
 
 
-static void	put_grid(int **map, t_data *img, t_2d_point dimensions)
+/* static void	put_grid(t_2d_grid *head, t_data *img, int clmn_nbr)
 {
-	int			**temp;
-	int			x;
-	int			y;
-	t_2d_point	i;
-	t_2d_point	f;
+	t_2d_grid	*temp;
+	int			pos;
 
-	y = -1;
-	temp = map;
-	while (++y < dimensions.y)
+	pos = 1;
+	temp = head;
+	printf("column nbr: %d\n", clmn_nbr);
+ 	// for (t_2d_grid *temp = head; temp != NULL; temp = temp->next)
+	// {	
+	// 	printf("(%d, %d) ", temp->point.x, temp->point.y);
+	// 	if (temp->next != NULL && temp->next->point.x < temp->point.x)
+	// 		printf("\n");
+	// }
+	// printf("\n");
+	while (temp->next != NULL)
 	{
-		x = 0;
-		while (x / 2 < dimensions.x - 1)
+		if (pos == clmn_nbr)
 		{
-			i.x = map[y][x];
-			i.y = map[y][x + 1];
-			f.x = map[y][x + 2];
-			f.y = map[y][x + 3];
-			draw_line(i, f, img);
-			x += 2;
+			temp = temp->next;
+			pos = 1;
 		}
+		// printf("(%d, %d) ", temp->point.x, temp->point.y);
+		// printf("teeeeest\n");
+		draw_line(temp->point, temp->next->point, img, temp->color);
+		temp = temp->next;
+		++pos;
 	}
-	x = 0;
-	while (x / 2 < dimensions.x)
+	pos = 1;
+	while (pos < clmn_nbr + 1)
 	{
-		y = -1;
-		while (++y < dimensions.y - 1)
+		temp = head;
+		while (temp->under != NULL)
 		{
-			i.x = map[y][x];
-			i.y = map[y][x + 1];
-			f.x = map[y + 1][x];
-			f.y = map[y + 1][x + 1];
-			draw_line(i, f, img);
+			draw_line(temp->point, temp->under->point, img, temp->color);
+			temp = temp->under;
 		}
-		x += 2;
+		head = head->next;
+		++pos;
 	}
 }
-
+ */
 static	int	create_load_map(/* t_data *img,  */char *path)
 {
 	t_2d_grid	*head_2d;

@@ -13,7 +13,7 @@
 #include "fdf.h"
 
 static void	set_1st_quad(int **map);
-static void	max_point(int **max_x);
+static void	max_point(int **map, int **map_3d, t_2d_point *x, t_2d_point *y);
 static void	min_point(int **map, int **x, int **y, t_2d_point dimensions);
 static int	check_scale_up(int **map, t_2d_grid dimensions);
 

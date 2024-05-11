@@ -54,7 +54,7 @@ static	int	create_load_map(t_data *img, char *path)
 		return (1);
 	calibrate(head_2d, head_3d);
 	put_grid(head_2d, img, nbr);
-	return (grid_3d_lstclear(&head_3d), 0);
+	return (free_map(map), free_map(map_3d), 0);
 }
 
 static void	put_grid(int **map, t_data *img, t_2d_point dimensions)

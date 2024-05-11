@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_2d_grid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:13 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/29 22:11:58 by akloster         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:18:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static	t_2d_grid	*create_2d_point(t_2d_grid *head, t_3d_grid *temp_3d)
 	new_point = (t_2d_grid *)malloc(sizeof(t_2d_grid));
 	if (!new_point)
 		return (NULL);
-	new_point->point.x = isometric_projection(temp_3d, 0, 1);
-	new_point->point.y = isometric_projection(temp_3d, 1, 1);
+	new_point->point.x = iso_proj(temp_3d, 0, 1);
+	new_point->point.y = iso_proj(temp_3d, 1, 1);
 	new_point->color = temp_3d->color;
 	new_point->next = NULL;
 	new_point->under = NULL;

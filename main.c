@@ -43,8 +43,8 @@ static	int	create_load_map(t_data *img, char *path)
 	int			**map_3d;
 	int			**map;
 
+	dimensions = get_array_dimensions(path);
 	fd = open(path, O_RDONLY);
-	dimensions = get_array_dimensions(fd);
 	map_3d = create_3d(fd, dimensions);
 	close(fd);
 	if (!map_3d)
@@ -52,8 +52,8 @@ static	int	create_load_map(t_data *img, char *path)
 	map = create_2d(map_3d, dimensions);
 	if (!map)
 		return (1);
-	calibrate(head_2d, head_3d);
-	put_grid(head_2d, img, nbr);
+	calibrate(map, map_3d);
+	put_grid(map, img, dimensions);
 	return (free_map(map), free_map(map_3d), 0);
 }
 

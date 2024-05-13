@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:03:22 by akloster          #+#    #+#             */
-/*   Updated: 2024/05/08 21:18:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/13 13:27:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,30 @@ static int	fill_line(int *line, int y, int max_x,	int fd)
 	return (SUCCESS);
 }
 
-static t_2d_point	get_array_dimensions(int fd)
+static char *clean_line(char *str)
+{
+	char *line;
+
+	line = ft_strtrim(str, "\n");
+	free(str);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
+t_2d_point	get_array_dimensions(char *path)
 {
 	t_2d_point	dimensions;
 	t_2d_point	failed;
 	char		**line;
 	char		*output;
+	int			fd;
 
 	dimensions.x = 0;
 	dimensions.y = 1;
 	failed.x = -1;
 	failed.y = -1;
+	fd = open(path, O_RDONLY);
 	output = clean_line(get_next_line(fd));
 	line = ft_split(output);
 	my_free(&output);
@@ -89,16 +102,3 @@ static t_2d_point	get_array_dimensions(int fd)
 	}
 	return (close(fd), dimensions);
 }
-
-
-static char *clean_line(char *str)
-{
-	char *line;
-
-	line = ft_strtrim(str, "\n");
-	free(str);
-	if (!line)
-		return (NULL);
-	return (line);
-}
-

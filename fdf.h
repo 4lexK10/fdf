@@ -94,7 +94,7 @@ int			matrix_calc(t_3d_grid *point_3d, int x);
 int			iso_proj(t_3d_grid *point_3d, int want_y, int scale);
 void		my_free(char **str);
 void		free_map(int ***map, t_2d_point dimensions);
-t_2d_point	get_array_dimensions(int fd);
+t_2d_point	get_array_dimensions(char *path);
 int			**create_3d(fd, t_2d_point dimensions);
 int			**create_2d(int **map_3d);
 void		min_point_3d(int **map, t_2d_point *min_x, t_2d_point *min_y);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:32:51 by akloster          #+#    #+#             */
-/*   Updated: 2024/05/13 13:27:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:48:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,32 @@ t_2d_point	bresenham_algo(t_2d_point i, t_2d_point f, int *param, t_2d_grid *hea
 	}
 	++pixel.x;
 	return (pixel);
+}
+
+t_2d_point	get_array_dimensions(char *path)
+{
+	t_2d_point	dimensions;
+	char		**line;
+	char		*output;
+	int			fd;
+
+	dimensions.x = 0;
+	dimensions.y = 1;
+	fd = open(path, O_RDONLY);
+	output = get_next_line(fd); 
+	clean_line(&output);
+	line = ft_split(output); // check if split protection works
+	my_free(&output);
+	if (!line)
+		return (dimensions);
+	while (*line++ != NULL)
+		++dimensions.x;
+	output = get_next_line(fd);
+	while (output != NULL)
+	{
+		++dimensions.y;
+		my_free(&output);
+		output = get_next_line(fd);
+	}
+	return (my_free(&output), close(fd), dimensions);
 }

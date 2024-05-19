@@ -44,6 +44,8 @@ static	int	create_load_map(t_data *img, char *path)
 	int			**map;
 
 	dimensions = get_array_dimensions(path);
+	if (dimensions.x == 0)
+		return (error(), 0);
 	fd = open(path, O_RDONLY);
 	map_3d = create_3d(fd, dimensions);
 	close(fd);

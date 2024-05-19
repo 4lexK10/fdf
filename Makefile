@@ -18,8 +18,8 @@ CFLAGS			=	-Wall -Wextra -Werror
 
 INCLUDES		=	-I /usr/local/include
 
-SRC				=	fdf.c free_functions.c create_3d_grid.c test.c img_build.c \
-					create_2d_grid.c draw_line.c calibrate.c
+SRC				=	fdf.c free_functions.c create_3d.c img_build.c \
+					create_2d.c draw_line.c calibrate.c testing.c
 
 LIB				=	-L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 

@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   create_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:03:22 by akloster          #+#    #+#             */
-/*   Updated: 2024/05/17 19:43:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:56:58 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static char		*clean_line(char *str);
-static char		*fill_line(int ***map, int fd);
+static int	fill_line(int *line, int y, int max_x,	int fd);
 
-int	**create_3d(fd, t_2d_point dimensions)
+int	**create_3d(int fd, t_2d_point dimensions)
 {
 	int		i;
 	int		**map;
@@ -27,25 +26,26 @@ int	**create_3d(fd, t_2d_point dimensions)
 	while (++i < dimensions.y)
 	{
 		map[i] = (int *)malloc(sizeof(int) * (dimensions.x * 3));
-		if (!map[i] || fill_lines(map[i], y, dimensions.x, fd) == FAIL)
-			return (free_map(&map), NULL);
+		if (!map[i] || fill_line(map[i], i, dimensions.x, fd) == FAIL)
+			return (free_map(&map, dimensions), NULL);
 	}
 	return (map);
 }
 
 static int	fill_line(int *line, int y, int max_x,	int fd)
 {
-	char	*output;
 	char	**raw_z;
-	int	x;
-	int	i;
+	char	*raw_line;
+	int		x;
+	int		i;
 
 	x = 0;
 	i = -1;
-	output = clean_line(get_next_line(fd)); 
-	raw_z = ft_split(output);  // check if split is protected if NULL is passed
+	raw_line = get_next_line(fd);
+	clean_line(&raw_line); 
+	raw_z = ft_split(raw_line, ' ');  // check if split is protected if NULL is passed
 	if (!raw_z)
-		return (my_free(&output), FAIL);
+		return (my_free(&raw_line), FAIL);
 	while (x < max_x)
 	{
 		line[++i] = x;
@@ -55,7 +55,7 @@ static int	fill_line(int *line, int y, int max_x,	int fd)
 	return (SUCCESS);
 }
 
-static void	clean_line(char **str)
+void	clean_line(char **str)
 {
 	char *line;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:32:51 by akloster          #+#    #+#             */
-/*   Updated: 2024/05/17 18:48:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:54:15 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	iso_proj(int *point, int want_y, int scale)
 	return (x);
 }
 
-void	min_point_3d(int **map, t_2d_point *min_x, t_2d_point *min_y)
+void	min_point(int **map, t_2d_point *min_x, t_2d_point *min_y, t_2d_point dimensions)
 {
 	int	i;
 	int	j;
@@ -96,7 +96,7 @@ t_2d_point	get_array_dimensions(char *path)
 	fd = open(path, O_RDONLY);
 	output = get_next_line(fd); 
 	clean_line(&output);
-	line = ft_split(output); // check if split protection works
+	line = ft_split(output, ' '); // check if split protection works
 	my_free(&output);
 	if (!line)
 		return (dimensions);

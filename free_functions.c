@@ -6,28 +6,11 @@
 /*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:44 by akloster          #+#    #+#             */
-/*   Updated: 2024/04/19 18:25:03 by akloster         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:54:14 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	grid_3d_lstclear(t_3d_grid **lst)
-{
-	t_3d_grid	*temp;
-	t_3d_grid	*prev;
-
-	if (!lst || !(*lst))
-		return ;
-	temp = *lst;
-	*lst = NULL;
-	while (temp != NULL)
-	{
-		prev = temp;
-		temp = temp->next;
-		free(prev);
-	}
-}
 
 void	grid_2d_lstclear(t_2d_grid **lst)
 {

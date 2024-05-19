@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: akloster <akloster@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:43:04 by akloster          #+#    #+#             */
-/*   Updated: 2024/05/11 17:40:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/19 17:54:09 by akloster         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_2d_grid	*create_2d_point(t_2d_grid **head, t_2d_point pixel);
 static int			find_case(t_2d_point *i, t_2d_point *f);
 static void			switch_values(t_2d_grid *head, int res);
 
-int	draw_line(t_2d_point i, t_2d_point f, t_data *img, int color)
+int	draw_line(t_2d_point i, t_2d_point f, t_data *img)
 {
 	t_2d_grid	*head;
 	t_2d_point	pixel;
@@ -41,7 +41,7 @@ int	draw_line(t_2d_point i, t_2d_point f, t_data *img, int color)
 		return (grid_2d_lstclear(&head), 1);
 	while (head != NULL)
 	{
-		my_mlx_pixel_put(img, head->point.x, head->point.y, color); //0xffffffabs(head->point.y - 1300)
+		my_mlx_pixel_put(img, head->point.x, head->point.y, 0xffffff); //0xffffffabs(head->point.y - 1300)
 		head = head->next;
 	}
 	return (grid_2d_lstclear(&head), 0);
